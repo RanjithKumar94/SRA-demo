@@ -3,17 +3,17 @@ const aircraft = [
 {
 callsign:"ETH773",
 type:"B737",
-route:"Q1",
-entryRadial:252,
-distance:60,
+route:"LOCAL",
+entryRadial:220,
+distance:25,
 
 x:0,
 y:0,
   labelAngle:0,
 
-heading:72,
-targetHeading:72,
-turnDirection:"SHORTEST",
+heading:090,
+targetHeading:080,
+turnDirection:"right",
 level:180,
 targetLevel:80,
 verticalSpeed: 0,
