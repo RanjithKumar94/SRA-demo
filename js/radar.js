@@ -26,10 +26,24 @@ function setRadarRange(range){
     PIXELS_PER_NM =
     RADAR_RADIUS / MAX_RANGE;
 
-    drawRadar();
+
+    aircraft.forEach(ac=>{
+
+        if(!ac.active) return;
+
+
+        const pos = bearingToXY(
+            ac.bearing,
+            ac.range
+        );
+
+
+        ac.x = pos.x;
+        ac.y = pos.y;
+
+    });
 
 }
-
 // Radar Centre
 const CENTER_X = canvas.width / 2;
 const CENTER_Y = canvas.height / 2;
