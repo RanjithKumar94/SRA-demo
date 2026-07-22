@@ -356,11 +356,11 @@ const y = ac.y;
 // Draw history trail
 if(ac.history){
 
-        ctx.fillStyle = "#FFFFFF";
-    ctx.lineWidth=1;
+        ctx.strokeStyle="#00FF00";
+ctx.lineWidth=1;
+ctx.setLineDash([2,6]);   // 2 px dot, 6 px gap
 
-    ctx.beginPath();
-
+ctx.beginPath();
 
     ac.history.forEach((p,i)=>{
 
@@ -387,7 +387,7 @@ if(ac.history){
 
 
     ctx.stroke();
-
+ctx.setLineDash([]);   // reset for other drawings
 }
 
 
