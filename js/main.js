@@ -218,6 +218,37 @@ function updateClock(){
         String(simSecond).padStart(2,"0");
 
 }
+document.getElementById("hideAircraft").onclick=function(){
+
+    if(selectedAircraft){
+
+        selectedAircraft.visible=false;
+
+        console.log(
+            selectedAircraft.callsign,
+            "HIDDEN"
+        );
+
+    }
+
+};
+
+
+
+document.getElementById("showAircraft").onclick=function(){
+
+    if(selectedAircraft){
+
+        selectedAircraft.visible=true;
+
+        console.log(
+            selectedAircraft.callsign,
+            "SHOWN"
+        );
+
+    }
+
+};
 
 //--------------------------------------
 // Spawn Aircraft
