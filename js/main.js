@@ -291,7 +291,35 @@ if(ac.distance <= 8.5){
     ac.arrivalPhase = true;
 
 }
+// ===============================
+// Speed Control
+// ===============================
 
+if(ac.speed !== ac.targetSpeed){
+
+
+    if(ac.speed > ac.targetSpeed){
+
+        ac.speed -= ac.speedChangeRate;
+
+
+        if(ac.speed < ac.targetSpeed)
+            ac.speed = ac.targetSpeed;
+
+    }
+
+
+    else if(ac.speed < ac.targetSpeed){
+
+        ac.speed += ac.speedChangeRate;
+
+
+        if(ac.speed > ac.targetSpeed)
+            ac.speed = ac.targetSpeed;
+
+    }
+
+}
 
 // ===============================
 // Controller selected descent
