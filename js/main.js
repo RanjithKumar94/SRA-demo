@@ -139,8 +139,7 @@ function spawnAircraft(){
 
         if(currentMinutes()>=spawnTime){
 
-            const start = bearingToXY(ac.entryRadial,60);
-
+const start = bearingToXY(ac.entryRadial, ac.distance);
             ac.x = start.x;
             ac.y = start.y;
 
