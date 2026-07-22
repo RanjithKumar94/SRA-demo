@@ -1,7 +1,7 @@
 const aircraft = [
 
 {
-callsign:"TIGER",
+callsign:"ETH773",
 type:"B737",
 route:"LOCAL",
 entryRadial:220,
@@ -14,8 +14,8 @@ y:0,
 heading:090,
 targetHeading:080,
 turnDirection:"right",
-level:1,
-targetLevel:1,
+level:180,
+targetLevel:80,
 verticalSpeed: 0,
 speed:140,
 targetSpeed:140,
