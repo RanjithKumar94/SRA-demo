@@ -94,7 +94,7 @@ document.getElementById("applyBtn").onclick = function(){
 };
 
 document.getElementById("applySpeed").onclick = function(){
-
+console.log("Speed button pressed");
     if(selectedAircraft == null){
 
         alert("Select an aircraft first.");
