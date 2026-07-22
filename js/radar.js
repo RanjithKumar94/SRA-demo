@@ -314,7 +314,66 @@ const CIRCUIT = {
 // ======================================
 // Draw Aircraft
 // ======================================
+let activeRunway = "08";
 
+
+function drawSRA_IntersectionArea(){
+
+    let leftBearing;
+    let rightBearing;
+
+
+    if(activeRunway === "08"){
+
+        leftBearing = 290;
+        rightBearing = 250;
+
+    }
+
+
+    else if(activeRunway === "26"){
+
+        leftBearing = 050;
+        rightBearing = 110;
+
+    }
+
+
+    const startNM = 8.5;
+    const endNM = 18.5;
+
+
+    ctx.strokeStyle="#FFAA00";
+    ctx.lineWidth=2;
+
+
+    const leftStart =
+    bearingToXY(leftBearing,startNM);
+
+    const leftEnd =
+    bearingToXY(leftBearing,endNM);
+
+
+    ctx.beginPath();
+    ctx.moveTo(leftStart.x,leftStart.y);
+    ctx.lineTo(leftEnd.x,leftEnd.y);
+    ctx.stroke();
+
+
+
+    const rightStart =
+    bearingToXY(rightBearing,startNM);
+
+    const rightEnd =
+    bearingToXY(rightBearing,endNM);
+
+
+    ctx.beginPath();
+    ctx.moveTo(rightStart.x,rightStart.y);
+    ctx.lineTo(rightEnd.x,rightEnd.y);
+    ctx.stroke();
+
+}
 function drawAircraft(){
 
     // Draw unknown traffic
