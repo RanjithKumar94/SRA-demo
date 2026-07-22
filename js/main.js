@@ -365,6 +365,13 @@ else if(ac.turnCommand === "LEFT"){
         ac.heading += 360;
 
 }
+        console.log(
+    "HDG:",
+    ac.heading,
+    "POS:",
+    ac.x,
+    ac.y
+);
         // ===============================
 // Arrival phase at 8.5 NM
 // ===============================
