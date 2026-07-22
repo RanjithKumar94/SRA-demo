@@ -160,6 +160,10 @@ function drawRunway(){
 // SRA Centreline Marks Only
 // ======================================
 
+// ======================================
+// SRA Centreline Marks Only
+// ======================================
+
 function drawCentrelineMarks(){
 
     const finalBearing = 260;   // RWY08
@@ -179,8 +183,6 @@ function drawCentrelineMarks(){
         );
 
 
-        // mark length
-
         let length;
 
 
@@ -196,11 +198,10 @@ function drawCentrelineMarks(){
         }
 
 
-
-        // perpendicular direction
+        // perpendicular to final track
 
         const angle =
-        (finalBearing + 90) *
+        (finalBearing) *
         Math.PI / 180;
 
 
