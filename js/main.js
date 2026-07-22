@@ -575,8 +575,8 @@ else{
 // Update distance from CCB
 // =====================================
 
-const dx = ac.x - CCB.x;
-const dy = ac.y - CCB.y;
+const rangeX = ac.x - CCB.x;
+const rangeY = ac.y - CCB.y;
 
 
 ac.distance =
