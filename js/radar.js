@@ -357,7 +357,7 @@ const y = ac.y;
 
 if(ac.history){
 
-    ctx.strokeStyle="#00FF00";
+ctx.fillStyle = "#FFFFFF";
     ctx.lineWidth=1;
 
     ctx.beginPath();
@@ -384,8 +384,7 @@ if(ac.history){
         // Aircraft blip
         // =====================================
 
-        ctx.fillStyle = "#00FF00";
-
+        ctx.fillStyle = "#FFFFFF";
         ctx.beginPath();
 
         ctx.arc(
@@ -418,8 +417,8 @@ if(ac.history){
         y + Math.sin(angle) * leaderLength;
 
 
-        ctx.strokeStyle = "#00FF00";
-        ctx.lineWidth = 1;
+ctx.fillStyle = "#FFFFFF";
+       ctx.lineWidth = 1;
 
 
         ctx.beginPath();
@@ -457,8 +456,8 @@ if(ac.history){
 
 
         ctx.textAlign = align;
-        ctx.fillStyle = "#00FF00";
-        ctx.font = "14px Consolas";
+ctx.fillStyle = "#FFFFFF";
+       ctx.font = "14px Consolas";
 
 
 
