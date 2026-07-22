@@ -131,6 +131,63 @@ console.log("Speed button pressed");
     }
 
 };
+// ======================================
+// SRA TURN COMMANDS
+// ======================================
+
+
+document.getElementById("turnLeft").onclick = function(){
+
+    if(selectedAircraft){
+
+        selectedAircraft.turnCommand = "LEFT";
+
+        selectedAircraft.orbit = false;
+
+        console.log(
+            selectedAircraft.callsign,
+            "TURN LEFT"
+        );
+
+    }
+
+};
+
+
+
+document.getElementById("turnRight").onclick = function(){
+
+    if(selectedAircraft){
+
+        selectedAircraft.turnCommand = "RIGHT";
+
+        selectedAircraft.orbit = false;
+
+        console.log(
+            selectedAircraft.callsign,
+            "TURN RIGHT"
+        );
+
+    }
+
+};
+
+
+
+document.getElementById("stopTurn").onclick = function(){
+
+    if(selectedAircraft){
+
+        selectedAircraft.turnCommand = "NONE";
+
+        console.log(
+            selectedAircraft.callsign,
+            "STOP TURN"
+        );
+
+    }
+
+};
 //--------------------------------------
 // Clock
 //--------------------------------------
