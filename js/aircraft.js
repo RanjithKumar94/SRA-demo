@@ -18,7 +18,7 @@ y:0,
 
 active:false,
 spawned:false,
-
+visible:true,
 labelAngle:0,
 
 verticalSpeed:0,
