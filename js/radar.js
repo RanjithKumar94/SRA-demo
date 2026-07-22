@@ -171,6 +171,97 @@ function drawCentreline(){
 
 }
 // ======================================
+// SRA Centreline Distance Marks
+// ======================================
+
+function drawCentrelineMarks(){
+
+    const finalBearing = 260;   // RWY08
+
+
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.lineWidth = 1;
+
+
+    for(let d = 1; d <= 15; d++){
+
+
+        const p =
+        bearingToXY(
+            finalBearing,
+            d
+        );
+
+
+        let markLength;
+
+
+        if(d <= 5){
+
+            markLength = nm(0.5);
+
+        }
+        else{
+
+            markLength = nm(1);
+
+        }
+
+
+
+        // perpendicular to centreline
+
+        const angle =
+        (finalBearing + 90) *
+        Math.PI / 180;
+
+
+
+        const dx =
+        Math.cos(angle) * markLength;
+
+
+        const dy =
+        Math.sin(angle) * markLength;
+
+
+
+        ctx.beginPath();
+
+
+        ctx.moveTo(
+            p.x - dx,
+            p.y - dy
+        );
+
+
+        ctx.lineTo(
+            p.x + dx,
+            p.y + dy
+        );
+
+
+        ctx.stroke();
+
+
+
+        // Distance label
+
+        ctx.fillStyle="#FFFFFF";
+        ctx.font="12px Consolas";
+
+
+        ctx.fillText(
+            d + "NM",
+            p.x + 5,
+            p.y - 5
+        );
+
+
+    }
+
+}
+// ======================================
 // Draw Traffic Circuit RWY 08/26
 // ======================================
 
@@ -731,6 +822,9 @@ function drawRadar(){
     drawRunway();
     drawTrafficCircuit();
     drawCentreline();
+    drawCentreline();
+
+drawCentrelineMarks();
     drawCCB();
 
     //drawUnknownBlips();
