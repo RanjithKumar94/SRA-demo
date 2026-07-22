@@ -1,70 +1,113 @@
+// ======================================
+// aircraft.js
+// SRA Aircraft Database
+// ======================================
+
+
 const aircraft = [
 
 {
+
 callsign:"ETH773",
+
 type:"B737",
 
 route:"SRA",
 
-// Random position
-randomStart:true,
-maxRange:25,
 
-range:0,
-bearing:0,
+
+
+// Initial random position
+
+range:20,
+
+bearing:120,
+
 
 x:0,
 y:0,
 
+
+
+// Label
+
 labelAngle:0,
 
 
-// Current aircraft heading
-heading:80,
+
+// Flight state
+
+active:false,
+spawned:false,
 
 
-// Lost aircraft orbit
-orbiting:true,
 
-orbitRadius:10,
+// ===============================
+// SRA ORBIT
+// ===============================
+
+orbit:true,
 
 orbitDirection:"RIGHT",
 
-orbitAngle:0,
+orbitHeading:0,
 
-orbitSpeed:3,
-
-
-// ATC commands
-
-turnCommand:"NONE",
-turnRate:3,
+orbitRate:3,
 
 
-// Speed
+
+// ===============================
+// Movement
+// ===============================
 
 speed:220,
+
 targetSpeed:220,
+
 speedChangeRate:2,
 
 
-// Altitude
 
-level:30,
-targetLevel:30,
+// ===============================
+// Level
+// ===============================
+
+level:50,
+
+targetLevel:50,
+
 verticalSpeed:0,
 
+
+
+// ===============================
+// ATC Commands
+// ===============================
+
+turnCommand:"NONE",
+
+heading:0,
+
+
+
+// ===============================
+// History trail
+// ===============================
 
 history:[],
 
 
-// Status
 
-lost:true,
-requestingHelp:true,
+// ===============================
+// Arrival
+// ===============================
 
-active:false,
-spawned:false
+arrivalPhase:false,
+
+landed:false,
+
+removeTimer:0
+
 
 }
 
