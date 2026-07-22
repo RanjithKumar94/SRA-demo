@@ -231,71 +231,28 @@ function moveAircraft(){
 // ======================================
 // Heading Turn with Direction Control
 // ======================================
-if(ac.heading !== ac.targetHeading){
+// ===============================
+// SRA TURN COMMAND
+// ===============================
 
-    const turnRate = 3;
+if(ac.turnCommand === "RIGHT"){
 
-    let diff =
-    (ac.targetHeading - ac.heading + 360) % 360;
+    ac.heading += ac.turnRate;
 
-
-
-
-    if(ac.turnDirection === "LEFT"){
-
-        ac.heading -= turnRate;
-
-        if(ac.heading < 0)
-            ac.heading += 360;
-
-    }
-
-
-    else if(ac.turnDirection === "RIGHT"){
-
-        ac.heading += turnRate;
-
-        if(ac.heading >= 360)
-            ac.heading -= 360;
-
-    }
-
-
-    else{
-
-        // SHORTEST TURN
-
-        if(diff > 180)
-            diff -= 360;
-
-
-        if(Math.abs(diff) <= turnRate){
-
-            ac.heading = ac.targetHeading;
-
-        }
-        else{
-
-            ac.heading += diff > 0
-            ? turnRate
-            : -turnRate;
-
-        }
-
-
-        if(ac.heading < 0)
-            ac.heading += 360;
-
-
-        if(ac.heading >= 360)
-            ac.heading -= 360;
-
-    }
-
+    if(ac.heading >= 360)
+        ac.heading -= 360;
 
 }
 
 
+else if(ac.turnCommand === "LEFT"){
+
+    ac.heading -= ac.turnRate;
+
+    if(ac.heading < 0)
+        ac.heading += 360;
+
+}
         // ===============================
 // Arrival phase at 8.5 NM
 // ===============================
