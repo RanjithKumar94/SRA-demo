@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ATC Radar Simulator</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div id="container">
+
+    <!-- ========================= -->
+    <!-- Radar Screen -->
+    <!-- ========================= -->
+
+    <div id="radarContainer">
+
+        <canvas id="radar" width="900" height="900"></canvas>
+
+        <div id="clock">
+            03:00:00
+        </div>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- Control Panel -->
+    <!-- ========================= -->
+
+    <div id="controlPanel">
+
+        <h2>ATC Control Panel</h2>
+
+        <label>Callsign</label><br>
+        <input
+            type="text"
+            id="callsign"
+            placeholder="IGO201"
+        >
+
+        <br><br>
+
+        <label>Heading</label><br>
+        <input
+            type="number"
+            id="heading"
+            min="1"
+            max="360"
+            placeholder="270"
+        >
+
+        <br><br>
+
+        <label>Flight Level (FL)</label><br>
+        <input
+            type="number"
+            id="level"
+            min="10"
+            max="450"
+            placeholder="110"
+        >
+
+        <br><br>
+
+        <strong>Turn Direction</strong>
+
+        <br><br>
+
+        <label>
+            <input
+                type="radio"
+                name="turnDir"
+                value="SHORTEST"
+                checked
+            >
+            Shortest
+        </label>
+
+        <br>
+
+        <label>
+            <input
+                type="radio"
+                name="turnDir"
+                value="LEFT"
+            >
+            Left
+        </label>
+
+        <br>
+
+        <label>
+            <input
+                type="radio"
+                name="turnDir"
+                value="RIGHT"
+            >
+            Right
+        </label>
+
+        <br><br>
+
+        <button id="applyBtn">
+            Apply Clearance
+        </button>
+<button id="rwy26Blip">RWY 26 Unknown</button>
+        <button id="pauseBtn">PAUSE</button>
+<button id="resumeBtn">RESUME</button>
+        <div id="controlPanel">
+
+    <label>Callsign</label>
+    <input id="depcallsign" type="text">
+
+
+    <label>Level</label>
+    <input id="deplevel" type="number">
+
+
+    <label>Departure Runway</label>
+
+<select id="depRunway">
+
+    <option value="26">RWY 26</option>
+    <option value="08">RWY 08</option>
+
+</select>
+
+
+<button id="createDeparture" type="button">
+    DEPARTURE
+</button>
+
+</div>
+</button>
+    </div>
+
+</div>
+
+<script src="js/aircraft.js"></script>
+<script src="js/departure.js"></script>
+<script src="js/main.js"></script>
+<script src="js/radar.js"></script>
+
+</body>
+</html>
