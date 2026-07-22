@@ -532,7 +532,11 @@ ctx.stroke();
         // =====================================
         // Leader line
         // =====================================
+if(ac.labelAngle === undefined){
 
+    ac.labelAngle = 0;
+
+}
         const angle =
         ac.labelAngle * Math.PI / 180;
 
