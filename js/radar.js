@@ -602,6 +602,13 @@ else{
 }
 
 
+ctx.fillText(
+    speedText,
+    labelX,
+    ly + 20
+);
+
+
         // =====================================
         // Vertical speed
         // =====================================
@@ -628,7 +635,7 @@ else{
             ctx.fillText(
                 vsText,
                 labelX,
-                ly + 20
+                ly + 30
             );
 
         }
