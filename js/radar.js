@@ -356,7 +356,7 @@ const y = ac.y;
 // Draw history trail
 if(ac.history){
 
-        ctx.strokeStyle="#00FF00";
+ctx.fillStyle = "#FFFFFF";
 ctx.lineWidth=1;
 ctx.setLineDash([2,6]);   // 2 px dot, 6 px gap
 
