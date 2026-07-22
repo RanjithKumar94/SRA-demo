@@ -4,9 +4,10 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ATC Radar Simulator</title>
+<title>SRA Radar Simulator</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -19,146 +20,195 @@
 <div id="container">
 
 
-    <!-- Radar Screen -->
+<!-- ========================= -->
+<!-- RADAR DISPLAY -->
+<!-- ========================= -->
 
-    <div id="radarContainer">
+<div id="radarContainer">
 
-        <canvas id="radar" width="900" height="900"></canvas>
-
-        <div id="clock">
-            03:00:00
-        </div>
-
-    </div>
+<canvas id="radar" width="900" height="900"></canvas>
 
 
-
-    <!-- Control Panel -->
-
-    <div id="controlPanel">
-
-        <h2>ATC Control Panel</h2>
+<div id="clock">
+05:00:00
+</div>
 
 
-        <label>Callsign</label><br>
-
-        <input 
-        type="text"
-        id="callsign"
-        placeholder="IGO201">
-
-
-        <br><br>
-
-
-        <label>Heading</label><br>
-
-        <input
-        type="number"
-        id="heading"
-        min="1"
-        max="360"
-        placeholder="270">
-
-
-        <br><br>
-
-
-        <label>Flight Level (FL)</label><br>
-
-        <input
-        type="number"
-        id="level"
-        min="10"
-        max="450"
-        placeholder="110">
-
-
-        <br><br>
-
-
-        <strong>Turn Direction</strong>
-
-        <br><br>
-
-
-        <label>
-        <input
-        type="radio"
-        name="turnDir"
-        value="SHORTEST"
-        checked>
-        Shortest
-        </label>
-
-
-        <br>
-
-
-        <label>
-        <input
-        type="radio"
-        name="turnDir"
-        value="LEFT">
-        Left
-        </label>
-
-
-        <br>
-
-
-        <label>
-        <input
-        type="radio"
-        name="turnDir"
-        value="RIGHT">
-        Right
-        </label>
-
-
-        <br><br>
-
-
-        <button id="applyBtn">
-            Apply Clearance
-        </button>
-
-
-        <button id="pauseBtn">
-            PAUSE
-        </button>
-
-
-        <button id="resumeBtn">
-            RESUME
-        </button>
-
-
-        <br><br>
-
-
-        <strong>Radar Range</strong>
-
-        <br><br>
-
-
-        <button onclick="setRadarRange(60)">
-            60 NM
-        </button>
-
-
-        <button onclick="setRadarRange(30)">
-            30 NM
-        </button>
-
-
-        <button onclick="setRadarRange(15)">
-            15 NM
-        </button>
+</div>
 
 
 
-    </div>
+<!-- ========================= -->
+<!-- CONTROL PANEL -->
+<!-- ========================= -->
+
+
+<div id="controlPanel">
+
+
+<h2>SRA CONTROL</h2>
+
+
+
+<!-- Aircraft Information -->
+
+<h3>Aircraft</h3>
+
+
+<input
+type="text"
+id="callsign"
+readonly
+placeholder="Select Aircraft"
+>
+
+
+<br><br>
+
+
+
+<!-- ========================= -->
+<!-- TURN CONTROL -->
+<!-- ========================= -->
+
+
+<h3>TURN INSTRUCTION</h3>
+
+
+<button id="turnLeft">
+TURN LEFT
+</button>
+
+
+<button id="stopTurn">
+STOP TURN
+</button>
+
+
+<button id="turnRight">
+TURN RIGHT
+</button>
+
+
+
+<br><br>
+
+
+
+<!-- ========================= -->
+<!-- SPEED CONTROL -->
+<!-- ========================= -->
+
+
+<h3>SPEED CONTROL</h3>
+
+
+<label>
+Target Speed (KT)
+</label>
+
+
+<br>
+
+
+<input
+type="number"
+id="speed"
+value="180"
+>
+
+
+<button id="applySpeed">
+SET SPEED
+</button>
+
+
+
+<br><br>
+
+
+
+
+<!-- ========================= -->
+<!-- LEVEL CLEARANCE -->
+<!-- ========================= -->
+
+
+<h3>LEVEL CLEARANCE</h3>
+
+
+<label>
+Cleared FL
+</label>
+
+
+<br>
+
+
+<input
+type="number"
+id="level"
+placeholder="Example 50"
+>
+
+
+<button id="applyBtn">
+APPLY CLEARANCE
+</button>
+
+
+
+<br><br>
+
+
+
+
+<!-- ========================= -->
+<!-- RADAR RANGE -->
+<!-- ========================= -->
+
+
+<h3>RADAR RANGE</h3>
+
+
+<button onclick="setRadarRange(60)">
+60 NM
+</button>
+
+
+<button onclick="setRadarRange(30)">
+30 NM
+</button>
+
+
+<button onclick="setRadarRange(15)">
+15 NM
+</button>
+
+
+
+<br><br>
+
+
+
+
+<!-- ========================= -->
+<!-- SIM CONTROL -->
+<!-- ========================= -->
+
+
+<button id="pauseBtn">
+PAUSE
+</button>
+
+
+<button id="resumeBtn">
+RESUME
+</button>
+
+
+
+</div>
 
 
 </div>
@@ -170,6 +220,7 @@
 <script src="js/main.js"></script>
 
 <script src="js/radar.js"></script>
+
 
 
 </body>
