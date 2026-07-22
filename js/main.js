@@ -229,15 +229,16 @@ function spawnAircraft(){
 
 
         // ===============================
-        // SRA Random Position Start
+        // SRA Random Start
         // ===============================
+
 
         const startBearing =
         Math.random() * 360;
 
 
         const startRange =
-        5 + Math.random() * ac.maxRange;
+        5 + Math.random() * 20;
 
 
         ac.range = startRange;
@@ -245,25 +246,30 @@ function spawnAircraft(){
         ac.bearing = startBearing;
 
 
+
         const start =
         bearingToXY(
-            startBearing,
-            startRange
+            ac.bearing,
+            ac.range
         );
 
 
         ac.x = start.x;
+
         ac.y = start.y;
 
 
+
         ac.spawned = true;
+
         ac.active = true;
+
 
 
         console.log(
             ac.callsign +
             " SRA started at " +
-            Math.round(startRange) +
+            Math.round(ac.range) +
             " NM"
         );
 
