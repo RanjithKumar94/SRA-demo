@@ -421,16 +421,72 @@ if(ac.approach){
         // Move aircraft
         // ===============================
 
-        const pixels =
-        movement * PIXELS_PER_NM;
+        // ===============================
+// Move aircraft
+// SRA Orbit / Normal
+// ===============================
 
 
-        const angle =
-        (ac.heading - 90) * Math.PI / 180;
+const pixels =
+movement * PIXELS_PER_NM;
 
 
-        ac.x += Math.cos(angle) * pixels;
-        ac.y += Math.sin(angle) * pixels;
+
+if(ac.orbit === true){
+
+
+    // Continuous orbit turn
+
+    if(ac.orbitDirection === "RIGHT"){
+
+        ac.orbitHeading += ac.orbitRate;
+
+    }
+    else{
+
+        ac.orbitHeading -= ac.orbitRate;
+
+    }
+
+
+
+    if(ac.orbitHeading >= 360)
+        ac.orbitHeading -= 360;
+
+
+    if(ac.orbitHeading < 0)
+        ac.orbitHeading += 360;
+
+
+
+    const angle =
+    (ac.orbitHeading - 90) *
+    Math.PI / 180;
+
+
+
+    ac.x += Math.cos(angle) * pixels;
+
+    ac.y += Math.sin(angle) * pixels;
+
+
+}
+
+
+else{
+
+
+    const angle =
+    (ac.heading - 90) *
+    Math.PI / 180;
+
+
+    ac.x += Math.cos(angle) * pixels;
+
+    ac.y += Math.sin(angle) * pixels;
+
+
+}
         // Store history trail
 
 // Store real position history
