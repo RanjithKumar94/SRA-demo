@@ -11,11 +11,6 @@ const ctx = canvas.getContext("2d");
 const RADAR_RADIUS = 380;
 let MAX_RANGE = 60;
 let PIXELS_PER_NM = RADAR_RADIUS / MAX_RANGE;
-function nm(value){
-    return value * PIXELS_PER_NM;
-}
-let MAX_RANGE = 60;
-let PIXELS_PER_NM = RADAR_RADIUS / MAX_RANGE;
 
 
 function nm(value){
