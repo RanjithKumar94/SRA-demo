@@ -585,12 +585,16 @@ ctx.fillStyle = "#FFFFFF";
             labelX,
             ly + 5
         );
+let speedText;
+
+
 if(ac.speed !== ac.targetSpeed){
 
     speedText =
     Math.round(ac.speed) +
-    "↓" +
-    ac.targetSpeed;
+    " ↓ " +
+    Math.round(ac.targetSpeed) +
+    " KT";
 
 }
 else{
