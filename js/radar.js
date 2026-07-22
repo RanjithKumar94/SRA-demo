@@ -194,7 +194,7 @@ switch(activeRunway){
         break;
 
 }
-
+const finalBearing = getFinalBearing();
 
     const start =
     bearingToXY(
@@ -235,7 +235,7 @@ switch(activeRunway){
 // ======================================
 
 function drawCentrelineMarks(){
-
+   
     function getFinalBearing(){
 
     switch(activeRunway){
@@ -257,7 +257,7 @@ function drawCentrelineMarks(){
     }
 
 }
-
+const finalBearing = getFinalBearing();
 
     ctx.strokeStyle = "#FFFFFF";
     ctx.lineWidth = 1;
