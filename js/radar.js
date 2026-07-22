@@ -710,6 +710,8 @@ console.log(
 
             // Fill control panel
             document.getElementById("callsign").value = ac.callsign;
+            document.getElementById("level").value =
+Math.round(ac.level);
             document.getElementById("heading").value = ac.targetHeading;
             document.getElementById("level").value = ac.targetLevel;
 
