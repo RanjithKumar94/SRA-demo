@@ -59,7 +59,27 @@ const BG_COLOR = "#001100";
 const RING_COLOR = "#00aa44";
 const ROUTE_COLOR = "#00ff66";
 const TEXT_COLOR = "#00ff66";
+function getFinalBearing(){
 
+    switch(activeRunway){
+
+        case "08":
+            return 260;
+
+        case "26":
+            return 80;
+
+        case "15":
+            return 335;
+
+        case "33":
+            return 155;
+
+        default:
+            return 260;
+    }
+
+}
 // ATS Routes
 const ROUTES = [
 
@@ -169,32 +189,8 @@ function drawRunway(){
 
 function drawSRACentreline(){
 
-    let finalBearing;
+    const finalBearing = getFinalBearing();
 
-
-switch(activeRunway){
-
-    case "08":
-        finalBearing = 260;
-        break;
-
-
-    case "26":
-        finalBearing = 80;
-        break;
-
-
-    case "15":
-        finalBearing = 335;
-        break;
-
-
-    case "33":
-        finalBearing = 155;
-        break;
-
-}
-const finalBearing = getFinalBearing();
 
     const start =
     bearingToXY(
@@ -216,15 +212,9 @@ const finalBearing = getFinalBearing();
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        start.x,
-        start.y
-    );
+    ctx.moveTo(start.x,start.y);
 
-    ctx.lineTo(
-        end.x,
-        end.y
-    );
+    ctx.lineTo(end.x,end.y);
 
     ctx.stroke();
 
@@ -236,27 +226,7 @@ const finalBearing = getFinalBearing();
 
 function drawCentrelineMarks(){
    
-    function getFinalBearing(){
-
-    switch(activeRunway){
-
-        case "08":
-            return 260;
-
-        case "26":
-            return 80;
-
-        case "15":
-            return 335;
-
-        case "33":
-            return 155;
-
-        default:
-            return 260;
-    }
-
-}
+    
 const finalBearing = getFinalBearing();
 
     ctx.strokeStyle = "#FFFFFF";
