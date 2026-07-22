@@ -580,6 +580,16 @@ else{
 
 
 }
+        // =====================================
+// Update distance from CCB
+// =====================================
+
+const dx = ac.x - CCB.x;
+const dy = ac.y - CCB.y;
+
+
+ac.distance =
+Math.sqrt(dx*dx + dy*dy) / PIXELS_PER_NM;
         // Store history trail
 
 // Store real position history
