@@ -520,8 +520,7 @@ function drawAircraft(){
 
    [...aircraft, ...(typeof departures !== "undefined" ? departures : [])].forEach(ac=>{
 
-        if(!ac.active) return;
-
+if(!ac.active || ac.visible === false) return;
 
         const x = ac.x;
 const y = ac.y;
