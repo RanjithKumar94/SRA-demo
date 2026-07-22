@@ -624,5 +624,3 @@ console.log(
     });
 
 });
-let MAX_RANGE = 60;
-let PIXELS_PER_NM = RADAR_RADIUS / MAX_RANGE;
