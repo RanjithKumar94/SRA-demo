@@ -26,24 +26,8 @@ resumeBtn.onclick = function(){
 
 };
 let selectedAircraft = null;
-let unknownBlips = [];
-document.getElementById("rwy26Blip").onclick = function(){
 
-    const start = bearingToXY(205, 60);   // R205 at 60 NM
 
-    unknownBlips.push({
-
-        x: start.x,
-        y: start.y,
-
-        heading: 360,      // South
-        speed: 550,
-
-        active: true
-
-    });
-
-};
 // Simulation Time
 let simHour = 5;
 let simMinute = 0;
@@ -142,19 +126,7 @@ function updateClock(){
 //--------------------------------------
 // Spawn Aircraft
 //--------------------------------------
-function spawnRWY26Unknown() {
 
-    const start = bearingToXY(205, 60);
-
-    unknownBlips.push({
-        x: start.x,
-        y: start.y,
-        heading: 360,
-        speed: 550,
-        active: true
-    });
-
-}
 function spawnAircraft(){
 
     aircraft.forEach(ac=>{
@@ -190,35 +162,7 @@ function spawnAircraft(){
 //--------------------------------------
 // Move Aircraft
 //--------------------------------------
-function moveUnknownBlips(){
 
-    unknownBlips.forEach(blip => {
-
-        if(!blip.active) return;
-
-        const movement = blip.speed / 3600;
-
-        const pixels = movement * PIXELS_PER_NM;
-
-        const angle = (blip.heading - 90) * Math.PI / 180;
-
-        blip.x += Math.cos(angle) * pixels;
-        blip.y += Math.sin(angle) * pixels;
-
-        const dx = blip.x - CCB.x;
-        const dy = blip.y - CCB.y;
-
-        const distance = Math.sqrt(dx * dx + dy * dy) / PIXELS_PER_NM;
-
-        if(distance > 65){
-
-            blip.active = false;
-
-        }
-
-    });
-
-}
 
 function moveAircraft(){
 
@@ -513,6 +457,6 @@ setInterval(function(){
     moveDepartures();
 }
 
-    moveUnknownBlips();
+    //moveUnknownBlips();
 
 },1000);
