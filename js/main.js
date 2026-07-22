@@ -131,6 +131,17 @@ console.log("Speed button pressed");
     }
 
 };
+
+document.getElementById("runwaySelect").addEventListener("change", function(){
+
+    activeRunway = this.value;
+
+    console.log(
+        "Selected runway:",
+        activeRunway
+    );
+
+});
 // ======================================
 // SRA TURN COMMANDS
 // ======================================
