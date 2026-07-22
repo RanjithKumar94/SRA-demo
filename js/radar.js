@@ -151,27 +151,13 @@ function drawRunway(){
 // Draw Extended Runway Centreline
 // ======================================
 
-function drawCentreline(){
 
-    const start = bearingToXY(260,15);
-    const end   = bearingToXY(80,15);
-
-    ctx.save();
-
-    ctx.strokeStyle="#FFFF00";
-    ctx.lineWidth=2;
-    ctx.setLineDash([10,6]);
-
-    ctx.beginPath();
-    ctx.moveTo(start.x,start.y);
-    ctx.lineTo(end.x,end.y);
-    ctx.stroke();
-
-    ctx.restore();
-
-}
 // ======================================
 // SRA Centreline Distance Marks
+// ======================================
+
+// ======================================
+// SRA Centreline Marks Only
 // ======================================
 
 function drawCentrelineMarks(){
@@ -193,23 +179,25 @@ function drawCentrelineMarks(){
         );
 
 
-        let markLength;
+        // mark length
+
+        let length;
 
 
         if(d <= 5){
 
-            markLength = nm(0.5);
+            length = nm(0.5);
 
         }
         else{
 
-            markLength = nm(1);
+            length = nm(1);
 
         }
 
 
 
-        // perpendicular to centreline
+        // perpendicular direction
 
         const angle =
         (finalBearing + 90) *
@@ -218,11 +206,11 @@ function drawCentrelineMarks(){
 
 
         const dx =
-        Math.cos(angle) * markLength;
+        Math.cos(angle) * length;
 
 
         const dy =
-        Math.sin(angle) * markLength;
+        Math.sin(angle) * length;
 
 
 
@@ -242,21 +230,6 @@ function drawCentrelineMarks(){
 
 
         ctx.stroke();
-
-
-
-        // Distance label
-
-        ctx.fillStyle="#FFFFFF";
-        ctx.font="12px Consolas";
-
-
-        ctx.fillText(
-            d + "NM",
-            p.x + 5,
-            p.y - 5
-        );
-
 
     }
 
@@ -821,9 +794,8 @@ function drawRadar(){
     drawRoutes();
     drawRunway();
     drawTrafficCircuit();
-    drawCentreline();
-    drawCentreline();
-
+    //drawCentreline();
+    
 drawCentrelineMarks();
     drawCCB();
 
