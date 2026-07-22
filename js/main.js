@@ -62,37 +62,35 @@ function entryOffset(type) {
 document.getElementById("applyBtn").onclick = function(){
 
     if(selectedAircraft == null){
+
         alert("Select an aircraft first.");
+
         return;
+
     }
 
-    const hdg = document.getElementById("heading").value;
-    const lvl = document.getElementById("level").value;
 
-    if(hdg !== "")
-        selectedAircraft.targetHeading = parseInt(hdg);
-
-    if(lvl !== "")
-        selectedAircraft.targetLevel = parseInt(lvl);
-    const turn =
-document.querySelector('input[name="turnDir"]:checked').value;
+    const lvl =
+    document.getElementById("level").value;
 
 
-selectedAircraft.turnDirection = turn;
-    console.log(
-    "TURN SELECTED:",
-    document.querySelector('input[name="turnDir"]:checked').value
-);
-    console.log(
-    "AIRCRAFT TURN:",
-    selectedAircraft.callsign,
-    selectedAircraft.turnDirection
-);
-console.log(
-    "COMMAND GIVEN:",
-    selectedAircraft.callsign,
-    selectedAircraft.targetHeading
-);
+    if(lvl !== ""){
+
+
+        selectedAircraft.targetLevel =
+        parseInt(lvl);
+
+
+        console.log(
+            "LEVEL CLEARANCE:",
+            selectedAircraft.callsign,
+            "FL",
+            selectedAircraft.targetLevel
+        );
+
+    }
+
+
 };
 //--------------------------------------
 // Clock
