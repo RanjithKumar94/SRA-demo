@@ -354,32 +354,44 @@ function drawAircraft(){
         const x = ac.x;
 const y = ac.y;
 // Draw history trail
-
 if(ac.history){
 
-ctx.fillStyle = "#FFFFFF";
+        ctx.fillStyle = "#FFFFFF";
     ctx.lineWidth=1;
 
     ctx.beginPath();
 
+
     ac.history.forEach((p,i)=>{
+
+
+        const point = bearingToXY(
+            p.bearing,
+            p.range
+        );
+
 
         if(i===0){
 
-            ctx.moveTo(p.x,p.y);
+            ctx.moveTo(point.x,point.y);
 
         }
         else{
 
-            ctx.lineTo(p.x,p.y);
+            ctx.lineTo(point.x,point.y);
 
         }
 
+
     });
+
 
     ctx.stroke();
 
 }
+
+
+
         // =====================================
         // Aircraft blip
         // =====================================
