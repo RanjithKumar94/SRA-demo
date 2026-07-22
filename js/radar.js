@@ -169,7 +169,31 @@ function drawRunway(){
 
 function drawSRACentreline(){
 
-    const finalBearing = 260;   // RWY08
+    let finalBearing;
+
+
+switch(activeRunway){
+
+    case "08":
+        finalBearing = 260;
+        break;
+
+
+    case "26":
+        finalBearing = 80;
+        break;
+
+
+    case "15":
+        finalBearing = 335;
+        break;
+
+
+    case "33":
+        finalBearing = 155;
+        break;
+
+}
 
 
     const start =
