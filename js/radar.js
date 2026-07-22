@@ -1,518 +1,618 @@
 // ======================================
-// main.js
-// ATC Simulator Engine
+// ATC RADAR SIMULATOR
+// radar.js - PART 1
 // ======================================
-let simulatorPaused = false;
 
+// Canvas
+const canvas = document.getElementById("radar");
+const ctx = canvas.getContext("2d");
 
-const pauseBtn = document.getElementById("pauseBtn");
-const resumeBtn = document.getElementById("resumeBtn");
+// Radar Size
+const RADAR_RADIUS = 380;
+const MAX_RANGE = 60;
+const PIXELS_PER_NM = RADAR_RADIUS / MAX_RANGE;
 
+function nm(value){
+    return value * PIXELS_PER_NM;
+}
 
-pauseBtn.onclick = function(){
+// Radar Centre
+const CENTER_X = canvas.width / 2;
+const CENTER_Y = canvas.height / 2;
 
-    simulatorPaused = true;
-
-    console.log("PAUSED =", simulatorPaused);
-
+// CCB VOR
+const CCB = {
+    x: CENTER_X,
+    y: CENTER_Y + 3
 };
 
+// Colours
+const BG_COLOR = "#001100";
+const RING_COLOR = "#00aa44";
+const ROUTE_COLOR = "#00ff66";
+const TEXT_COLOR = "#00ff66";
 
-resumeBtn.onclick = function(){
+// ATS Routes
+const ROUTES = [
 
-    simulatorPaused = false;
+    {name:"B425", bearing:190},
+    {name:"W14", bearing:350},
+    {name:"R416", bearing:70},
+    {name:"Q1", bearing:252},
+    {name:"Q2", bearing:270},
+    {name:"G473 NW", bearing:300},
+    {name:"G473 SE", bearing:120}
 
-    console.log("RESUMED =", simulatorPaused);
+];
 
-};
-let selectedAircraft = null;
-let unknownBlips = [];
-document.getElementById("rwy26Blip").onclick = function(){
+// ======================================
+// Convert Bearing & Distance to X,Y
+// ======================================
 
-    const start = bearingToXY(205, 60);   // R205 at 60 NM
+function bearingToXY(bearing, distance){
 
-    unknownBlips.push({
+    const angle = (bearing - 90) * Math.PI / 180;
 
-        x: start.x,
-        y: start.y,
+    const scale = RADAR_RADIUS / MAX_RANGE;
 
-        heading: 360,      // South
-        speed: 550,
+    return {
 
-        active: true
+        x: CCB.x + Math.cos(angle) * distance * scale,
+
+        y: CCB.y + Math.sin(angle) * distance * scale
+
+    };
+
+}
+
+// ======================================
+// Radar Background
+// ======================================
+
+function drawBackground(){
+
+    ctx.fillStyle = BG_COLOR;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.strokeStyle = RING_COLOR;
+    ctx.lineWidth = 1;
+
+    for(let i=10;i<=60;i+=10){
+
+        ctx.beginPath();
+
+        ctx.arc(
+            CCB.x,
+            CCB.y,
+            i * RADAR_RADIUS / MAX_RANGE,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.stroke();
+
+    }
+}
+  // ======================================
+// PART 2
+// Draw Runway
+// ======================================
+
+function drawRunway(){
+
+    const p1 = bearingToXY(260,10);
+    const p2 = bearingToXY(80,10);
+
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.lineWidth = 4;
+
+    ctx.beginPath();
+    ctx.moveTo(p1.x,p1.y);
+    ctx.lineTo(p2.x,p2.y);
+    ctx.stroke();
+
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "16px Arial";
+
+    ctx.fillText("08",p1.x-22,p1.y+8);
+    ctx.fillText("26",p2.x+8,p2.y+8);
+
+}
+
+// ======================================
+// Draw Extended Runway Centreline
+// ======================================
+
+function drawCentreline(){
+
+    const start = bearingToXY(260,15);
+    const end   = bearingToXY(80,15);
+
+    ctx.save();
+
+    ctx.strokeStyle="#FFFF00";
+    ctx.lineWidth=2;
+    ctx.setLineDash([10,6]);
+
+    ctx.beginPath();
+    ctx.moveTo(start.x,start.y);
+    ctx.lineTo(end.x,end.y);
+    ctx.stroke();
+
+    ctx.restore();
+
+}
+// ======================================
+// Draw Traffic Circuit RWY 08/26
+// ======================================
+
+function drawTrafficCircuit(){
+    const end08 = bearingToXY(260,12);
+    const end26 = bearingToXY(80,12);
+    const dx = end26.x - end08.x;
+    const dy = end26.y - end08.y;
+    const len = Math.sqrt(dx*dx + dy*dy);
+
+    const px = -dy / len;
+    const py = dx / len;
+
+    const offset = nm(5);
+
+    const top08 = {
+        x:end08.x + px*offset,
+        y:end08.y + py*offset
+    };
+
+    const top26 = {
+        x:end26.x + px*offset,
+        y:end26.y + py*offset
+    };
+
+    const bot08 = {
+        x:end08.x - px*offset,
+        y:end08.y - py*offset
+    };
+
+    const bot26 = {
+        x:end26.x - px*offset,
+        y:end26.y - py*offset
+    };
+
+    ctx.strokeStyle="#FFFF00";
+    ctx.lineWidth=2;
+
+    // Upper box
+    ctx.beginPath();
+    ctx.moveTo(end08.x,end08.y);
+    ctx.lineTo(top08.x,top08.y);
+    ctx.lineTo(top26.x,top26.y);
+    ctx.lineTo(end26.x,end26.y);
+    ctx.stroke();
+
+    // Lower box
+    ctx.beginPath();
+    ctx.moveTo(end08.x,end08.y);
+    ctx.lineTo(bot08.x,bot08.y);
+    ctx.lineTo(bot26.x,bot26.y);
+    ctx.lineTo(end26.x,end26.y);
+    ctx.stroke();
+
+}
+// ======================================
+// Draw CCB VOR
+// ======================================
+
+function drawCCB(){
+
+    ctx.beginPath();
+    ctx.arc(CCB.x,CCB.y,4,0,Math.PI*2);
+
+    ctx.fillStyle="#00FFFF";
+    ctx.fill();
+
+    ctx.font="16px Arial";
+    ctx.fillStyle="#00FFFF";
+
+    ctx.fillText("CCB",CCB.x+8,CCB.y-8);
+
+}
+
+// ======================================
+// Draw ATS Routes
+// ======================================
+
+function drawRoutes(){
+
+    ctx.strokeStyle=ROUTE_COLOR;
+    ctx.lineWidth=2;
+
+    ROUTES.forEach(route=>{
+
+        const end = bearingToXY(route.bearing,60);
+
+        ctx.beginPath();
+        ctx.moveTo(CCB.x,CCB.y);
+        ctx.lineTo(end.x,end.y);
+        ctx.stroke();
+
+        const label = bearingToXY(route.bearing,56);
+
+        ctx.fillStyle = TEXT_COLOR;
+        ctx.font = "15px Consolas";
+
+        ctx.fillText(
+            route.name,
+            label.x-15,
+            label.y
+        );
 
     });
 
+}
+// ======================================
+// TRAFFIC CIRCUIT CONFIGURATION
+// ======================================
+
+const CIRCUIT = {
+
+    centreline:15,
+    final:8,
+    upwind:8,
+    downwind:12,
+    width:5
+
 };
-// Simulation Time
-let simHour = 5;
-let simMinute = 0;
-let simSecond = 0;
 
-//--------------------------------------
-// Time Functions
-//--------------------------------------
+  // ======================================
+// PART 3
+// Draw Aircraft (placeholder)
+// ======================================
 
-function currentMinutes() {
-    return simHour * 60 + simMinute;
-}
+// ======================================
+// Draw Aircraft
+// ======================================
+// ======================================
+// Draw Unknown Blips
+// ======================================
 
-function timeToMinutes(time) {
-    const t = time.split(":");
-    return parseInt(t[0]) * 60 + parseInt(t[1]);
-}
-
-function entryOffset(type) {
-
-    switch(type){
-
-        case "ATR72":
-        case "DO228":
-            return 18;
-
-        default:
-            return 14;
-    }
-
-}
-document.getElementById("applyBtn").onclick = function(){
-
-    if(selectedAircraft == null){
-        alert("Select an aircraft first.");
-        return;
-    }
-
-    const hdg = document.getElementById("heading").value;
-    const lvl = document.getElementById("level").value;
-
-    if(hdg !== "")
-        selectedAircraft.targetHeading = parseInt(hdg);
-
-    if(lvl !== "")
-        selectedAircraft.targetLevel = parseInt(lvl);
-    const turn =
-document.querySelector('input[name="turnDir"]:checked').value;
-
-
-selectedAircraft.turnDirection = turn;
-    console.log(
-    "TURN SELECTED:",
-    document.querySelector('input[name="turnDir"]:checked').value
-);
-    console.log(
-    "AIRCRAFT TURN:",
-    selectedAircraft.callsign,
-    selectedAircraft.turnDirection
-);
-console.log(
-    "COMMAND GIVEN:",
-    selectedAircraft.callsign,
-    selectedAircraft.targetHeading
-);
-};
-//--------------------------------------
-// Clock
-//--------------------------------------
-
-function updateClock(){
-
-    simSecond++;
-
-    if(simSecond>=60){
-
-        simSecond=0;
-        simMinute++;
-
-    }
-
-    if(simMinute>=60){
-
-        simMinute=0;
-        simHour++;
-
-    }
-
-    document.getElementById("clock").innerHTML =
-        String(simHour).padStart(2,"0")+":"+
-        String(simMinute).padStart(2,"0")+":"+
-        String(simSecond).padStart(2,"0");
-
-}
-
-//--------------------------------------
-// Spawn Aircraft
-//--------------------------------------
-function spawnRWY26Unknown() {
-
-    const start = bearingToXY(205, 60);
-
-    unknownBlips.push({
-        x: start.x,
-        y: start.y,
-        heading: 360,
-        speed: 550,
-        active: true
-    });
-
-}
-function spawnAircraft(){
-
-    aircraft.forEach(ac=>{
-
-        if(ac.spawned) return;
-
-        const spawnTime =
-            timeToMinutes(ac.ccbETA) -
-            entryOffset(ac.type);
-
-        if(currentMinutes()>=spawnTime){
-
-            const start = bearingToXY(ac.entryRadial,60);
-
-            ac.x = start.x;
-            ac.y = start.y;
-
-            ac.spawned = true;
-            ac.active = true;
-
-            console.log(ac.callsign+" entered");
-
-        }
-
-    });
-
-}
-// =====================================
-// Arrival Descent Logic
-// =====================================
-
-
-//--------------------------------------
-// Move Aircraft
-//--------------------------------------
-function moveUnknownBlips(){
+function drawUnknownBlips(){
 
     unknownBlips.forEach(blip => {
 
         if(!blip.active) return;
 
-        const movement = blip.speed / 3600;
-
-        const pixels = movement * PIXELS_PER_NM;
-
-        const angle = (blip.heading - 90) * Math.PI / 180;
-
-        blip.x += Math.cos(angle) * pixels;
-        blip.y += Math.sin(angle) * pixels;
-
-        const dx = blip.x - CCB.x;
-        const dy = blip.y - CCB.y;
-
-        const distance = Math.sqrt(dx * dx + dy * dy) / PIXELS_PER_NM;
-
-        if(distance > 65){
-
-            blip.active = false;
-
-        }
+        ctx.beginPath();
+        ctx.arc(blip.x, blip.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = "#00FF00";
+        ctx.fill();
 
     });
 
 }
+// ======================================
+// Draw Aircraft
+// ======================================
+// ======================================
+// Draw Aircraft
+// ======================================
 
-function moveAircraft(){
+// ======================================
+// Draw Aircraft
+// ======================================
 
-    aircraft.forEach(ac=>{
+function drawAircraft(){
+
+    // Draw unknown traffic
+    if(typeof unknownBlips !== "undefined"){
+
+        unknownBlips.forEach(blip=>{
+
+            if(!blip.active) return;
+
+            ctx.fillStyle = "#FF0000";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                blip.x,
+                blip.y,
+                6,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+
+        });
+
+    }
+
+
+    if(typeof aircraft === "undefined") return;
+
+
+   [...aircraft, ...(typeof departures !== "undefined" ? departures : [])].forEach(ac=>{
 
         if(!ac.active) return;
 
 
-        // ===============================
-        // Speed (NM per second)
-        // ===============================
-
-        let movement;
-
-        switch(ac.type){
-
-            case "B777":
-                movement = 5.5 / 60;
-                break;
-
-            case "B737":
-            case "A320":
-                movement = 5.0 / 60;
-                break;
-
-            case "ATR72":
-                movement = 4 / 60;
-                break;
-
-            case "DO228":
-                movement = 3.5 / 60;
-                break;
-
-            default:
-                movement = 5.0 / 60;
-
-        }
+        const x = ac.x;
+        const y = ac.y;
 
 
-        // ===============================
-        // Heading turn
-        // ===============================
-// ======================================
-// Heading Turn with Direction Control
-// ======================================
-if(ac.heading !== ac.targetHeading){
+        // =====================================
+        // Aircraft blip
+        // =====================================
 
-    const turnRate = 3;
+        ctx.fillStyle = "#00FF00";
 
-    let diff =
-    (ac.targetHeading - ac.heading + 360) % 360;
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            4,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
 
 
 
+        // =====================================
+        // Leader line
+        // =====================================
 
-    if(ac.turnDirection === "LEFT"){
-
-        ac.heading -= turnRate;
-
-        if(ac.heading < 0)
-            ac.heading += 360;
-
-    }
+        const angle =
+        ac.labelAngle * Math.PI / 180;
 
 
-    else if(ac.turnDirection === "RIGHT"){
-
-        ac.heading += turnRate;
-
-        if(ac.heading >= 360)
-            ac.heading -= 360;
-
-    }
+        const leaderLength = 45;
 
 
-    else{
+        const lx =
+        x + Math.cos(angle) * leaderLength;
 
-        // SHORTEST TURN
-
-        if(diff > 180)
-            diff -= 360;
+        const ly =
+        y + Math.sin(angle) * leaderLength;
 
 
-        if(Math.abs(diff) <= turnRate){
+        ctx.strokeStyle = "#00FF00";
+        ctx.lineWidth = 1;
 
-            ac.heading = ac.targetHeading;
+
+        ctx.beginPath();
+
+        ctx.moveTo(x,y);
+
+        ctx.lineTo(lx,ly);
+
+        ctx.stroke();
+
+
+
+        // =====================================
+        // Label anchor
+        // =====================================
+
+        let labelX;
+        let align;
+
+
+        if(Math.cos(angle) >= 0){
+
+            // Right side label
+            labelX = lx + 8;
+            align = "left";
 
         }
         else{
 
-            ac.heading += diff > 0
-            ? turnRate
-            : -turnRate;
+            // Left side label
+            labelX = lx - 8;
+            align = "right";
 
         }
 
 
-        if(ac.heading < 0)
-            ac.heading += 360;
+        ctx.textAlign = align;
+        ctx.fillStyle = "#00FF00";
+        ctx.font = "14px Consolas";
 
 
-        if(ac.heading >= 360)
-            ac.heading -= 360;
-
-    }
-
-
-}
-
-
-        // ===============================
-// Arrival phase at 8.5 NM
-// ===============================
-
-if(ac.distance <= 8.5){
-
-    ac.arrivalPhase = true;
-
-}
-
-
-// ===============================
-// Controller selected descent
-// ===============================
-
-if(ac.level > ac.targetLevel){
-
-    const descentRate = 0.25;   // FL/sec (~1500 ft/min)
-
-    ac.level -= descentRate;
-
-    ac.verticalSpeed = -1500;
-
-
-    if(ac.level <= ac.targetLevel){
-
-        ac.level = ac.targetLevel;
-
-        ac.verticalSpeed = 0;
-
-    }
-
-}
-
-
-else if(ac.level < ac.targetLevel){
-
-    const climbRate = 0.25;
-
-    ac.level += climbRate;
-
-    ac.verticalSpeed = 1500;
-
-
-    if(ac.level >= ac.targetLevel){
-
-        ac.level = ac.targetLevel;
-
-        ac.verticalSpeed = 0;
-
-    }
-
-}
-
-
-else{
-
-    ac.verticalSpeed = 0;
-
-}
 
         // =====================================
-// Final Approach Descent
-// =====================================
+        // Callsign
+        // =====================================
 
-if(ac.distance <= 8.5 && ac.targetLevel === 0){
-
-    ac.approach = true;
-
-}
-
-
-if(ac.approach){
-
-    // Descend based on distance remaining
-
-    let requiredLevel = ac.distance * 2.35;
-
-    if(requiredLevel < 0)
-        requiredLevel = 0;
+        ctx.fillText(
+            ac.callsign,
+            labelX,
+            ly - 10
+        );
 
 
-    if(ac.level > requiredLevel){
 
-        ac.level -= 0.25;
+        // =====================================
+        // Level
+        // =====================================
 
-        ac.verticalSpeed = -1500;
+        const currentFL =
+        Math.round(ac.level);
+
+        const assignedFL =
+        Math.round(ac.targetLevel);
 
 
-        if(ac.level <= requiredLevel){
+        let levelText;
 
-            ac.level = requiredLevel;
+
+        if(currentFL < assignedFL){
+
+            levelText =
+            "FL" + currentFL +
+            " ↑ FL" + assignedFL;
 
         }
+        else if(currentFL > assignedFL){
 
-    }
+            levelText =
+            "FL" + currentFL +
+            " ↓ FL" + assignedFL;
 
-}
+        }
+        else{
 
-        // ===============================
-        // Move aircraft
-        // ===============================
-
-        const pixels =
-        movement * PIXELS_PER_NM;
-
-
-        const angle =
-        (ac.heading - 90) * Math.PI / 180;
-
-
-        ac.x += Math.cos(angle) * pixels;
-        ac.y += Math.sin(angle) * pixels;
-
-
-        ac.distance -= movement;
-
-
-        if(ac.distance < 0)
-            ac.distance = 0;
-
-
-
-        // ===============================
-        // Landing
-        // ===============================
-
-        if(ac.distance <= 0.1 && ac.level <= 0){
-
-            ac.landed = true;
+            levelText =
+            "FL" + currentFL;
 
         }
 
 
-
-        // ===============================
-        // Remove after 3 seconds
-        // ===============================
-
-        if(ac.landed){
-
-            ac.removeTimer =
-            (ac.removeTimer || 0) + 1;
+        ctx.fillText(
+            levelText,
+            labelX,
+            ly + 5
+        );
 
 
-            if(ac.removeTimer >= 3){
 
-                ac.active = false;
+        // =====================================
+        // Vertical speed
+        // =====================================
 
-                console.log(
-                    ac.callsign + " removed"
-                );
+        if(ac.verticalSpeed !== 0){
+
+            let vsText;
+
+
+            if(ac.verticalSpeed > 0){
+
+                vsText =
+                "↑" + ac.verticalSpeed;
+
+            }
+            else{
+
+                vsText =
+                "↓" + Math.abs(ac.verticalSpeed);
 
             }
 
+
+            ctx.fillText(
+                vsText,
+                labelX,
+                ly + 20
+            );
+
         }
+
+
+
+        // Reset
+        ctx.textAlign = "left";
 
 
     });
 
 }
-//--------------------------------------
-// Start Simulator
-//--------------------------------------
+// ======================================
+// Draw Complete Radar
+// ======================================
 
+function drawRadar(){
 
-setInterval(function(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    console.log("Timer:", simulatorPaused);
+    drawBackground();
+    drawRoutes();
+    drawRunway();
+    drawTrafficCircuit();
+    drawCentreline();
+    drawCCB();
 
-    if(simulatorPaused === true){
-        return;
-    }
+    drawUnknownBlips();
+    drawAircraft();
 
-    updateClock();
+    requestAnimationFrame(drawRadar);
 
-    spawnAircraft();
-
-    moveAircraft();
-
-    if(typeof moveDepartures === "function"){
-    moveDepartures();
 }
 
-    moveUnknownBlips();
+// ======================================
+// Start Radar
+// ======================================
 
-},1000);
+window.onload = function(){
+
+    drawRadar();
+
+};
+
+canvas.addEventListener("click", function(e){
+
+    console.log("Canvas clicked");
+
+});
+// ======================================
+// Label Click Detection
+// ======================================
+// ======================================
+// Aircraft Selection + Label Rotation
+// ======================================
+
+canvas.addEventListener("click", function(e){
+
+    const rect = canvas.getBoundingClientRect();
+
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+
+[...aircraft, ...(typeof departures !== "undefined" ? departures : [])].forEach(ac=>{
+        if(!ac.active) return;
+
+        const angle = ac.labelAngle * Math.PI / 180;
+        const leaderLength = 35;
+
+        const lx = ac.x + Math.cos(angle) * leaderLength;
+        const ly = ac.y + Math.sin(angle) * leaderLength;
+
+        // Label hit box
+        if(
+            mx >= lx &&
+            mx <= lx + 100 &&
+            my >= ly - 20 &&
+            my <= ly + 35
+        ){
+console.log(
+    "Clicked aircraft:",
+    ac.callsign,
+    ac.labelAngle
+);
+            // Select aircraft
+            selectedAircraft = ac;
+
+            // Rotate label 45°
+            ac.labelAngle = (ac.labelAngle + 45) % 360;
+
+            // Fill control panel
+            document.getElementById("callsign").value = ac.callsign;
+            document.getElementById("heading").value = ac.targetHeading;
+            document.getElementById("level").value = ac.targetLevel;
+
+            // Turn direction
+            const turn = document.querySelector(
+                `input[name="turnDir"][value="${ac.turnDirection}"]`
+            );
+
+            if(turn){
+                turn.checked = true;
+            }
+
+            console.log(ac.callsign + " selected");
+        }
+
+    });
+
+});
