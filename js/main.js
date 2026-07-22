@@ -133,22 +133,46 @@ function spawnAircraft(){
 
         if(ac.spawned) return;
 
-        const spawnTime =
-            timeToMinutes(ac.ccbETA) -
-            entryOffset(ac.type);
 
-        if(currentMinutes()>=spawnTime){
+        // ===============================
+        // SRA Random Position Start
+        // ===============================
 
-const start = bearingToXY(ac.entryRadial, ac.distance);
-            ac.x = start.x;
-            ac.y = start.y;
+        const startBearing =
+        Math.random() * 360;
 
-            ac.spawned = true;
-            ac.active = true;
 
-            console.log(ac.callsign+" entered");
+        const startRange =
+        5 + Math.random() * ac.maxRange;
 
-        }
+
+        ac.range = startRange;
+
+        ac.bearing = startBearing;
+
+
+        const start =
+        bearingToXY(
+            startBearing,
+            startRange
+        );
+
+
+        ac.x = start.x;
+        ac.y = start.y;
+
+
+        ac.spawned = true;
+        ac.active = true;
+
+
+        console.log(
+            ac.callsign +
+            " SRA started at " +
+            Math.round(startRange) +
+            " NM"
+        );
+
 
     });
 
