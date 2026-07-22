@@ -329,22 +329,29 @@ function moveAircraft(){
 // SRA TURN COMMAND
 // ===============================
 
+// ===============================
+// SRA TURN COMMAND
+// ===============================
+
 if(ac.turnCommand === "RIGHT"){
 
-    ac.heading += ac.turnRate;
+    ac.heading += 3;
 
-    if(ac.heading >= 360)
-        ac.heading -= 360;
+
+    if(ac.heading >=360)
+        ac.heading -=360;
 
 }
 
 
+
 else if(ac.turnCommand === "LEFT"){
 
-    ac.heading -= ac.turnRate;
+    ac.heading -=3;
 
-    if(ac.heading < 0)
-        ac.heading += 360;
+
+    if(ac.heading <0)
+        ac.heading +=360;
 
 }
         // ===============================
