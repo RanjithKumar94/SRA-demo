@@ -283,20 +283,7 @@ const CIRCUIT = {
 // Draw Unknown Blips
 // ======================================
 
-function drawUnknownBlips(){
 
-    unknownBlips.forEach(blip => {
-
-        if(!blip.active) return;
-
-        ctx.beginPath();
-        ctx.arc(blip.x, blip.y, 5, 0, Math.PI * 2);
-        ctx.fillStyle = "#00FF00";
-        ctx.fill();
-
-    });
-
-}
 // ======================================
 // Draw Aircraft
 // ======================================
@@ -541,7 +528,7 @@ function drawRadar(){
     drawCentreline();
     drawCCB();
 
-    drawUnknownBlips();
+    //drawUnknownBlips();
     drawAircraft();
 
     requestAnimationFrame(drawRadar);
