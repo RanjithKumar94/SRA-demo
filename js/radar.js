@@ -163,7 +163,48 @@ function drawRunway(){
 // ======================================
 // SRA Centreline Marks Only
 // ======================================
+// ======================================
+// SRA Centreline 0 - 15 NM
+// ======================================
 
+function drawSRACentreline(){
+
+    const finalBearing = 260;   // RWY08
+
+
+    const start =
+    bearingToXY(
+        finalBearing,
+        0
+    );
+
+
+    const end =
+    bearingToXY(
+        finalBearing,
+        15
+    );
+
+
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.lineWidth = 1;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        start.x,
+        start.y
+    );
+
+    ctx.lineTo(
+        end.x,
+        end.y
+    );
+
+    ctx.stroke();
+
+}
 // ======================================
 // SRA Centreline Distance Marks
 // Only 5,10,15 NM
