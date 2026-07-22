@@ -571,70 +571,43 @@ ctx.setLineDash([]);   // reset for other drawings
 // Aircraft Symbol
 // =====================================
 
+// =====================================
+// Simple Radar Aircraft Symbol
+// =====================================
+
 ctx.fillStyle = "#FFFFFF";
-ctx.lineWidth = 1.5;
-
-
-const hdg =
-ac.heading * Math.PI / 180;
-
-
-const size = 10;
-
-
-// Aircraft nose
-
-const noseX =
-x + Math.sin(hdg) * size;
-
-const noseY =
-y - Math.cos(hdg) * size;
-
-
-// Left wing
-
-const leftX =
-x - Math.cos(hdg) * 6;
-
-const leftY =
-y - Math.sin(hdg) * 6;
-
-
-// Right wing
-
-const rightX =
-x + Math.cos(hdg) * 6;
-
-const rightY =
-y + Math.sin(hdg) * 6;
-
-
-
-ctx.beginPath();
-
-ctx.moveTo(noseX,noseY);
-
-ctx.lineTo(leftX,leftY);
-
-ctx.lineTo(x,y+6);
-
-ctx.lineTo(rightX,rightY);
-
-ctx.closePath();
-
-ctx.stroke();
-
-
-// Centre dot
 
 ctx.beginPath();
 
 ctx.arc(
     x,
     y,
-    2,
+    5,
     0,
-    Math.PI*2
+    Math.PI * 2
+);
+
+ctx.fill();
+
+
+// Heading line
+
+const hdg =
+(ac.heading || 0) *
+Math.PI / 180;
+
+
+ctx.strokeStyle="#FFFFFF";
+ctx.lineWidth=1;
+
+
+ctx.beginPath();
+
+ctx.moveTo(x,y);
+
+ctx.lineTo(
+    x + Math.sin(hdg)*15,
+    y - Math.cos(hdg)*15
 );
 
 ctx.stroke();
