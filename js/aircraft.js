@@ -44,16 +44,16 @@ speedChangeRate:2,
 level:50,
 targetLevel:50,
 verticalSpeed:0,
-
-
+turnCommand:"NONE",
+heading:90,
 // History
 
-history:[],
+history:[]
 
 
 // Commands
 
-turnCommand:"NONE"
+
 
 }
 
