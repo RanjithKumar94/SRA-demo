@@ -9,22 +9,30 @@ const pauseBtn = document.getElementById("pauseBtn");
 const resumeBtn = document.getElementById("resumeBtn");
 
 
-pauseBtn.onclick = function(){
+if(pauseBtn){
 
-    simulatorPaused = true;
+    pauseBtn.onclick = function(){
 
-    console.log("PAUSED =", simulatorPaused);
+        simulatorPaused = true;
 
-};
+        console.log("PAUSED =", simulatorPaused);
+
+    };
+
+}
 
 
-resumeBtn.onclick = function(){
+if(resumeBtn){
 
-    simulatorPaused = false;
+    resumeBtn.onclick = function(){
 
-    console.log("RESUMED =", simulatorPaused);
+        simulatorPaused = false;
 
-};
+        console.log("RESUMED =", simulatorPaused);
+
+    };
+
+}
 let selectedAircraft = null;
 
 
