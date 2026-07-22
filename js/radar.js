@@ -14,12 +14,56 @@ let PIXELS_PER_NM = RADAR_RADIUS / MAX_RANGE;
 function nm(value){
     return value * PIXELS_PER_NM;
 }
+let MAX_RANGE = 60;
+let PIXELS_PER_NM = RADAR_RADIUS / MAX_RANGE;
+
+
+function nm(value){
+    return value * PIXELS_PER_NM;
+}
+
+
+// REPLACE setRadarRange HERE
+
 function setRadarRange(range){
 
     MAX_RANGE = range;
 
     PIXELS_PER_NM =
     RADAR_RADIUS / MAX_RANGE;
+
+
+    aircraft.forEach(ac=>{
+
+        if(!ac.active) return;
+
+
+        const distance =
+        Math.sqrt(
+            Math.pow(ac.x - CCB.x,2) +
+            Math.pow(ac.y - CCB.y,2)
+        ) / PIXELS_PER_NM;
+
+
+        const bearing =
+        Math.atan2(
+            ac.y - CCB.y,
+            ac.x - CCB.x
+        ) * 180 / Math.PI + 90;
+
+
+        const pos =
+        bearingToXY(
+            bearing,
+            distance
+        );
+
+
+        ac.x = pos.x;
+        ac.y = pos.y;
+
+    });
+
 
     drawRadar();
 
