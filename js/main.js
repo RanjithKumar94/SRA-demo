@@ -387,20 +387,19 @@ if(ac.approach){
         ac.y += Math.sin(angle) * pixels;
         // Store history trail
 
+// Store real position history
+
 ac.history.push({
-    x: ac.x,
-    y: ac.y
+    range: ac.range,
+    bearing: ac.bearing
 });
 
-
-// Keep last 30 points
 
 if(ac.history.length > 30){
 
     ac.history.shift();
 
 }
-
 // Update real radar position
 const dx = ac.x - CCB.x;
 const dy = ac.y - CCB.y;
