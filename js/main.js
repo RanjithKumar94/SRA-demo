@@ -386,7 +386,17 @@ if(ac.approach){
         ac.x += Math.cos(angle) * pixels;
         ac.y += Math.sin(angle) * pixels;
 
+// Update real radar position
+const dx = ac.x - CCB.x;
+const dy = ac.y - CCB.y;
 
+ac.range = Math.sqrt(dx*dx + dy*dy) / PIXELS_PER_NM;
+
+ac.bearing =
+(Math.atan2(dy, dx) * 180 / Math.PI) + 90;
+
+if(ac.bearing < 0)
+    ac.bearing += 360;
         ac.distance -= movement;
 
 
