@@ -331,13 +331,8 @@ function drawAircraft(){
         if(!ac.active) return;
 
 
-        const pos = bearingToXY(
-    ac.entryRadial,
-    ac.distance
-);
-
-const x = pos.x;
-const y = pos.y;
+        const x = ac.x;
+const y = ac.y;
 
         // =====================================
         // Aircraft blip
