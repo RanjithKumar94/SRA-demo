@@ -9,13 +9,21 @@ const ctx = canvas.getContext("2d");
 
 // Radar Size
 const RADAR_RADIUS = 380;
-const MAX_RANGE = 60;
-const PIXELS_PER_NM = RADAR_RADIUS / MAX_RANGE;
-
+let MAX_RANGE = 60;
+let PIXELS_PER_NM = RADAR_RADIUS / MAX_RANGE;
 function nm(value){
     return value * PIXELS_PER_NM;
 }
+function setRadarRange(range){
 
+    MAX_RANGE = range;
+
+    PIXELS_PER_NM =
+    RADAR_RADIUS / MAX_RANGE;
+
+    drawRadar();
+
+}
 // Radar Centre
 const CENTER_X = canvas.width / 2;
 const CENTER_Y = canvas.height / 2;
@@ -616,3 +624,5 @@ console.log(
     });
 
 });
+let MAX_RANGE = 60;
+let PIXELS_PER_NM = RADAR_RADIUS / MAX_RANGE;
