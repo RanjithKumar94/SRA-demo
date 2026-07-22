@@ -272,7 +272,13 @@ function spawnAircraft(){
             Math.round(ac.range) +
             " NM"
         );
-
+console.log(
+    "ACTIVE CHECK",
+    ac.callsign,
+    ac.active,
+    ac.x,
+    ac.y
+);
 
     });
 
