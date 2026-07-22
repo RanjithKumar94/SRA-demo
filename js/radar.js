@@ -171,38 +171,47 @@ function drawRunway(){
 
 function drawCentrelineMarks(){
 
-    const finalBearing = 260;   // RWY08
-
-
-    const marks = [5,10,15];
+    const finalBearing = 260; // RWY08
 
 
     ctx.strokeStyle = "#FFFFFF";
     ctx.lineWidth = 1;
 
 
-    marks.forEach(d=>{
+    for(let d = 1; d <= 15; d++){
 
 
-        const p =
-        bearingToXY(
+        const p = bearingToXY(
             finalBearing,
             d
         );
 
 
-        // 1 NM total length
-        // 0.5 NM each side
-
-        const length =
-        nm(0.5);
+        let length;
 
 
+        // Major marks
+        if(d === 5 || d === 10 || d === 15){
 
-        // perpendicular to centreline
+            // 1 NM each side
+            length = nm(1);
+
+        }
+
+        // Minor marks
+        else{
+
+            // 0.5 NM each side
+            length = nm(0.5);
+
+        }
+
+
+
+        // perpendicular direction
 
         const angle =
-        (finalBearing) *
+        finalBearing *
         Math.PI / 180;
 
 
@@ -218,24 +227,19 @@ function drawCentrelineMarks(){
 
         ctx.beginPath();
 
-
         ctx.moveTo(
             p.x - dx,
             p.y - dy
         );
-
 
         ctx.lineTo(
             p.x + dx,
             p.y + dy
         );
 
-
         ctx.stroke();
 
-
-    });
-
+    }
 
 }
 // ======================================
