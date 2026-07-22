@@ -9,6 +9,8 @@ distance:25,
 
 x:0,
 y:0,
+  range:25,
+bearing:220,
   labelAngle:0,
 
 heading:090,
