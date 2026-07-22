@@ -92,6 +92,37 @@ document.getElementById("applyBtn").onclick = function(){
 
 
 };
+
+document.getElementById("applySpeed").onclick = function(){
+
+    if(selectedAircraft == null){
+
+        alert("Select an aircraft first.");
+
+        return;
+
+    }
+
+
+    const spd =
+    document.getElementById("speed").value;
+
+
+    if(spd !== ""){
+
+        selectedAircraft.targetSpeed =
+        parseInt(spd);
+
+
+        console.log(
+            "SPEED CLEARANCE:",
+            selectedAircraft.callsign,
+            selectedAircraft.targetSpeed
+        );
+
+    }
+
+};
 //--------------------------------------
 // Clock
 //--------------------------------------
