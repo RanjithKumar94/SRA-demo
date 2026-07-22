@@ -396,18 +396,77 @@ if(ac.history){
         // Aircraft blip
         // =====================================
 
-        ctx.fillStyle = "#FFFFFF";
-        ctx.beginPath();
+        // =====================================
+// Aircraft Symbol
+// =====================================
 
-        ctx.arc(
-            x,
-            y,
-            4,
-            0,
-            Math.PI * 2
-        );
+ctx.fillStyle = "#FFFFFF";
+ctx.lineWidth = 1.5;
 
-        ctx.fill();
+
+const hdg =
+ac.heading * Math.PI / 180;
+
+
+const size = 10;
+
+
+// Aircraft nose
+
+const noseX =
+x + Math.sin(hdg) * size;
+
+const noseY =
+y - Math.cos(hdg) * size;
+
+
+// Left wing
+
+const leftX =
+x - Math.cos(hdg) * 6;
+
+const leftY =
+y - Math.sin(hdg) * 6;
+
+
+// Right wing
+
+const rightX =
+x + Math.cos(hdg) * 6;
+
+const rightY =
+y + Math.sin(hdg) * 6;
+
+
+
+ctx.beginPath();
+
+ctx.moveTo(noseX,noseY);
+
+ctx.lineTo(leftX,leftY);
+
+ctx.lineTo(x,y+6);
+
+ctx.lineTo(rightX,rightY);
+
+ctx.closePath();
+
+ctx.stroke();
+
+
+// Centre dot
+
+ctx.beginPath();
+
+ctx.arc(
+    x,
+    y,
+    2,
+    0,
+    Math.PI*2
+);
+
+ctx.stroke();
 
 
 
