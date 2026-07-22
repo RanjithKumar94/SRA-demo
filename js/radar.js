@@ -236,7 +236,27 @@ switch(activeRunway){
 
 function drawCentrelineMarks(){
 
-    const finalBearing = 260; // RWY08
+    function getFinalBearing(){
+
+    switch(activeRunway){
+
+        case "08":
+            return 260;
+
+        case "26":
+            return 80;
+
+        case "15":
+            return 335;
+
+        case "33":
+            return 155;
+
+        default:
+            return 260;
+    }
+
+}
 
 
     ctx.strokeStyle = "#FFFFFF";
