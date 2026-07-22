@@ -19,7 +19,11 @@ y:0,
 active:false,
 spawned:false,
 
+labelAngle:0,
 
+verticalSpeed:0,
+
+labelOffset:45,
 // SRA Orbit
 
 orbit:true,
