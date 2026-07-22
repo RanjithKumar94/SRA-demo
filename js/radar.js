@@ -590,27 +590,6 @@ ctx.arc(
 ctx.fill();
 
 
-// Heading line
-
-const hdg =
-(ac.heading || 0) *
-Math.PI / 180;
-
-
-ctx.strokeStyle="#FFFFFF";
-ctx.lineWidth=1;
-
-
-ctx.beginPath();
-
-ctx.moveTo(x,y);
-
-ctx.lineTo(
-    x + Math.sin(hdg)*15,
-    y - Math.cos(hdg)*15
-);
-
-ctx.stroke();
 
 
 
