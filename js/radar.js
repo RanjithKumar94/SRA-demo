@@ -164,16 +164,24 @@ function drawRunway(){
 // SRA Centreline Marks Only
 // ======================================
 
+// ======================================
+// SRA Centreline Distance Marks
+// Only 5,10,15 NM
+// ======================================
+
 function drawCentrelineMarks(){
 
     const finalBearing = 260;   // RWY08
+
+
+    const marks = [5,10,15];
 
 
     ctx.strokeStyle = "#FFFFFF";
     ctx.lineWidth = 1;
 
 
-    for(let d = 1; d <= 15; d++){
+    marks.forEach(d=>{
 
 
         const p =
@@ -183,22 +191,15 @@ function drawCentrelineMarks(){
         );
 
 
-        let length;
+        // 1 NM total length
+        // 0.5 NM each side
+
+        const length =
+        nm(0.5);
 
 
-        if(d <= 5){
 
-            length = nm(0.5);
-
-        }
-        else{
-
-            length = nm(1);
-
-        }
-
-
-        // perpendicular to final track
+        // perpendicular to centreline
 
         const angle =
         (finalBearing) *
@@ -232,7 +233,9 @@ function drawCentrelineMarks(){
 
         ctx.stroke();
 
-    }
+
+    });
+
 
 }
 // ======================================
