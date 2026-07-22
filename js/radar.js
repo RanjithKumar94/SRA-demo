@@ -842,6 +842,7 @@ function drawRadar(){
     drawBackground();
     drawRoutes();
     drawRunway();
+    drawSRACentreline();
     drawTrafficCircuit();
     //drawCentreline();
     
